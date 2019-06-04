@@ -2,6 +2,8 @@
 #
 INSTANCE="ubuntu"
 UNAMEX="ubuntu"
+WEBSITENAME="nsfcareer-react-website"
+
 cd /home/$UNAMEX
 sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install nginx -y
@@ -17,8 +19,9 @@ sudo cp nginx-digitalbrain/default /etc/nginx/sites-available/
 # at this step you need to update A record on google domains
 #
 sudo systemctl reload nginx
-git clone https://github.com/PSUCompBio/nsfcareer-react-app.git
-cd nsfcareer-react-app
+# clone https://github.com/PSUCompBio/nsfcareer-react-app.git
+git clone https://github.com/PSUCompBio/nsfcareer-react-website.git
+cd /home/$UNAMEX/$WEBSITENAME
 sudo npm install
 # sudo npm run start
 sudo npm run build
@@ -29,7 +32,7 @@ export PM2_HOME=/home/$UNAMEX/.pm2
 #pm2 start -u $UNAMEX --interpreter babel-node  node_modules/react-scripts/scripts/start.js  --name="App"
 pm2 serve build -u $UNAMEX --name="app"
 cd /home/$UNAMEX
-cp nsfcareer-react-app/Website-Directions.readme .
+cp /home/$UNAMEX/$WEBSITENAME/Website-Directions.readme .
 sudo chown -R $UNAMEX *
 #sudo add-apt-repository ppa:certbot/certbot -y
 #sudo apt-get update -y
