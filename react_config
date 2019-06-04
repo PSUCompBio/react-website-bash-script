@@ -1,0 +1,39 @@
+#!/bin/bash
+#
+INSTANCE="ubuntu"
+UNAMEX="ubuntu"
+cd /home/$UNAMEX
+sudo apt-get update && sudo apt-get upgrade -y
+sudo apt-get install nginx -y
+sudo systemctl enable nginx
+sudo apt-get update -y
+sudo apt-get install build-essential libssl-dev -y
+sudo apt-get install -y nodejs npm
+sudo npm i -g npx
+cd /home/$UNAMEX
+git clone https://github.com/PSUCompBio/nginx-digitalbrain.git
+sudo cp nginx-digitalbrain/default /etc/nginx/sites-available/
+#
+# at this step you need to update A record on google domains
+#
+sudo systemctl reload nginx
+git clone https://github.com/PSUCompBio/nsfcareer-react-app.git
+cd nsfcareer-react-app
+sudo npm install
+# sudo npm run start
+sudo npm run build
+sudo npm install -g serve
+sudo npm install pm2 -g
+npm i -g babel-cli
+export PM2_HOME=/home/$UNAMEX/.pm2
+#pm2 start -u $UNAMEX --interpreter babel-node  node_modules/react-scripts/scripts/start.js  --name="App"
+pm2 serve build -u $UNAMEX --name="app"
+cd /home/$UNAMEX
+cp nsfcareer-react-app/Website-Directions.readme .
+sudo chown -R $UNAMEX *
+#sudo add-apt-repository ppa:certbot/certbot -y
+#sudo apt-get update -y
+#sudo apt-get install python-certbot-nginx -y
+#sudo ufw status
+#sudo ufw allow 'Nginx Full'
+#sudo certbot --nginx -d digitalbraininjury.com -d www.digitalbraininjury.com --non-interactive --agree-tos -m reuben.kraft@gmail.com
