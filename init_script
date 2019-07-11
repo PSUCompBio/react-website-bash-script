@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 INSTANCE="ubuntu"
-UNAMEX="abby"
+UNAMEX="ubuntu"
 WEBSITENAME="nsfcareer-react-website"
 
 cd /home/$UNAMEX
