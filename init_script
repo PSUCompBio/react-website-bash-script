@@ -1,0 +1,52 @@
+#!/bin/bash
+#
+INSTANCE="ubuntu"
+UNAMEX="ubuntu"
+WEBSITENAME="nsfcareer-react-website"
+
+cd /home/$UNAMEX
+echo $UNAMEX
+#sudo apt-get update && sudo apt-get upgrade -y
+sudo apt-get install nginx -y
+sudo systemctl enable nginx
+# sudo apt-get update -y
+sudo apt-get install build-essential libssl-dev -y
+curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+sudo apt-get install -y nodejs
+sudo apt-get install -y  npm
+sudo npm i -g npx
+cd /home/$UNAMEX
+# git clone https://github.com/PSUCompBio/nginx-digitalbrain.git
+# git clone https://github.com/vradars/nginx-digitalbrain.git
+# Cloning specific branch of Git
+git clone -b nginx-test https://github.com/vradars/nginx-digitalbrain.git
+
+sudo cp nginx-digitalbrain/default /etc/nginx/sites-available/
+#
+# at this step you need to update A record on google domains
+#
+sudo systemctl reload nginx
+
+# Cloning specific brach of React website 
+# git clone https://github.com/PSUCompBio/nsfcareer-react-website.git
+git clone -b nginx-test https://github.com/vradars/nsfcareer-react-website.git
+cd /home/$UNAMEX/$WEBSITENAME
+sudo npm install
+sudo npm install -g concurrently
+sudo npm install -g nodemon
+sudo npm run init
+# sudo npm run build
+sudo npm install -g serve
+sudo npm install pm2 -g
+sudo npm i -g babel-cli
+export PM2_HOME=/home/$UNAMEX/.pm2
+echo "====================================================================="
+echo "|                **** VERY IMPORTANT STEP *****                      |"
+echo "====================================================================="
+echo "* Now Update the AWS Credentials and other variables in  "
+echo ""
+echo "---------------------------------------------------------------------"
+echo "* Execute the command given below to open & Edit in Vi Editor"
+echo " vi $PWD/config/configuration_keys.json "
+echo "======================================================================"
+echo ""
