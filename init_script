@@ -25,7 +25,7 @@ cd /home/$UNAMEX
 # git clone https://github.com/PSUCompBio/nginx-digitalbrain.git
 # git clone https://github.com/vradars/nginx-digitalbrain.git
 # Cloning specific branch of Git
-git clone -b nginx-test https://github.com/vradars/nginx-digitalbrain.git
+git clone https://github.com/vradars/nginx-digitalbrain.git
 
 sudo cp nginx-digitalbrain/default /etc/nginx/sites-available/
 #
@@ -35,7 +35,7 @@ sudo systemctl reload nginx
 
 # Cloning specific brach of React website 
 # git clone https://github.com/PSUCompBio/nsfcareer-react-website.git
-git clone -b nginx-test https://github.com/vradars/nsfcareer-react-website.git
+git clone https://github.com/vradars/nsfcareer-react-website.git
 cd /home/$UNAMEX/$WEBSITENAME
 sudo npm install
 sudo npm install -g concurrently
