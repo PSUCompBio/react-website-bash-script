@@ -1,7 +1,7 @@
 #!/bin/bash
 #
 INSTANCE="ubuntu"
-UNAMEX="ubuntu"
+UNAMEX="abby"
 WEBSITENAME="nsfcareer-react-website"
 
 cd /home/$UNAMEX
@@ -11,6 +11,12 @@ sudo apt-get install nginx -y
 sudo systemctl enable nginx
 # sudo apt-get update -y
 sudo apt-get install build-essential libssl-dev -y
+
+# Python dependencies
+sudo apt install python-pip -y
+sudo pip install Requests
+sudo pip install pillow
+
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
 sudo apt-get install -y nodejs
 sudo apt-get install -y  npm
@@ -47,6 +53,6 @@ echo "* Now Update the AWS Credentials and other variables in  "
 echo ""
 echo "---------------------------------------------------------------------"
 echo "* Execute the command given below to open & Edit in Vi Editor"
-echo " vi $PWD/config/configuration_keys.json "
+echo " sudo vi $PWD/config/configuration_keys.json "
 echo "======================================================================"
 echo ""

@@ -7,7 +7,7 @@
 ```
 # IMPORTANT STEPS TO EXECUTE SCRIPT
  - Execute init_script
- - Then update the file config/configuration_keys.json with proper credentials and values
+ - Then update the file config/configuration_keys.json with proper credentials and values. Use sudo to update it
  - Execute the deploy_script
  - Access the site on http://www.digitalbraininjury.com/ 
 
