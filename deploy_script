@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+INSTANCE="ubuntu"
+UNAMEX="ubuntu"
+WEBSITENAME="nsfcareer-react-website"
+
+cd /home/$UNAMEX/$WEBSITENAME
+sudo pm2 start -u $UNAMEX ./server.js  --name="service"
+cd client/
+# command to build the package
+sudo npm run build
+sudo pm2 start -u $UNAMEX ./server.js  --name="app"
+# sudo pm2 start -u $UNAMEX --interpreter babel-node  client/node_modules/react-scripts/scripts/start.js  --name="app"
+# sudo pm2 serve build -u $UNAMEX --name="app"
+cd /home/$UNAMEX
+cp /home/$UNAMEX/$WEBSITENAME/Website-Directions.readme .
+sudo chown -R $UNAMEX *
+#sudo add-apt-repository ppa:certbot/certbot -y
+#sudo apt-get update -y
+#sudo apt-get install python-certbot-nginx -y
+#sudo ufw status
+#sudo ufw allow 'Nginx Full'
+#sudo certbot --nginx -d digitalbraininjury.com -d www.digitalbraininjury.com --non-interactive --agree-tos -m reuben.kraft@gmail.com
