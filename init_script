@@ -3,7 +3,7 @@
 INSTANCE="ubuntu"
 UNAMEX="ubuntu"
 WEBSITENAME="nsfcareer-react-website"
-
+HOST=""
 cd /home/$UNAMEX
 echo "========================================================="
 echo "ENTER SINGLE HOST NAME with http:// suffix. Please don't" 
