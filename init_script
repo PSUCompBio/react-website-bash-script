@@ -3,8 +3,16 @@
 INSTANCE="ubuntu"
 UNAMEX="ubuntu"
 WEBSITENAME="nsfcareer-react-website"
-
+HOST=""
 cd /home/$UNAMEX
+echo "========================================================="
+echo "ENTER SINGLE HOST NAME with http:// suffix. Please don't" 
+echo "add "\"/"\" at the end of the URL"
+echo "e.g : http://digitalbrainjury.com , http://nsfcareer.io"
+echo "========================================================="
+echo ""
+read -p "Enter DOMAIN NAME: " HOST
+echo ""
 echo $UNAMEX
 #sudo apt-get update && sudo apt-get upgrade -y
 sudo apt-get install nginx -y
@@ -22,12 +30,36 @@ sudo apt-get install -y nodejs
 sudo apt-get install -y  npm
 sudo npm i -g npx
 cd /home/$UNAMEX
-# git clone https://github.com/PSUCompBio/nginx-digitalbrain.git
-# git clone https://github.com/vradars/nginx-digitalbrain.git
-# Cloning specific branch of Git
-git clone https://github.com/vradars/nginx-digitalbrain.git
 
-sudo cp nginx-digitalbrain/default /etc/nginx/sites-available/
+echo "
+server {
+    listen 80;
+    server_name $HOST;
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-for \$proxy_add_x_forwarded_for;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+
+ }
+location /api {
+        proxy_pass http://127.0.0.1:3001/api;
+        proxy_http_version 1.1;
+
+        proxy_set_header Upgrade \$http_upgrade;
+        proxy_set_header X-Real-IP \$remote_addr;
+        proxy_set_header X-Forwarded-for \$proxy_add_x_forwarded_for;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host \$host;
+        proxy_cache_bypass \$http_upgrade;
+     }
+
+}" > /etc/nginx/sites-available/default
+
 #
 # at this step you need to update A record on google domains
 #
@@ -45,8 +77,11 @@ sudo npm install -g serve
 sudo npm install pm2 -g
 sudo npm i -g babel-cli
 cd /home/$UNAMEX/$WEBSITENAME/client/
+echo -n "export const ENDPOINT = "\"$HOST/api/"\" ;" > ./src/config/constants.js
+
 sudo npm install
 export PM2_HOME=/home/$UNAMEX/.pm2
+cd ..
 echo "====================================================================="
 echo "|                **** VERY IMPORTANT STEP *****                      |"
 echo "====================================================================="
