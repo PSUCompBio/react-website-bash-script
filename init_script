@@ -81,6 +81,7 @@ echo -n "export const ENDPOINT = "\"$HOST/api/"\" ;" > ./src/config/constants.js
 
 sudo npm install
 export PM2_HOME=/home/$UNAMEX/.pm2
+cd ..
 echo "====================================================================="
 echo "|                **** VERY IMPORTANT STEP *****                      |"
 echo "====================================================================="
