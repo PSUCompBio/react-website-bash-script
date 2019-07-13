@@ -1,11 +1,12 @@
 #!/bin/bash
 #
+source ./deploy
 INSTANCE="ubuntu"
 UNAMEX="ubuntu"
 WEBSITENAME="nsfcareer-react-website"
 
 cd /home/$UNAMEX/$WEBSITENAME
-sudo pm2 start -u $UNAMEX ./server.js  --name="service"
+sudo DOMAIN=$HOST pm2 start -u $UNAMEX ./server.js  --name="service"
 cd client/
 # command to build the package
 sudo npm run build
