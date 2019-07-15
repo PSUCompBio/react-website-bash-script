@@ -1,9 +1,20 @@
 #!/bin/bash
 #
-source ./deploy
 INSTANCE="ubuntu"
 UNAMEX="ubuntu"
 WEBSITENAME="nsfcareer-react-website"
+
+echo "========================================================="
+echo "               REACT WEBSITE DEPLOYMENT                  "
+echo "========================================================="
+echo "ENTER SINGLE HOST NAME with http:// suffix. Please don't"
+echo "add "\"/"\" at the end of the URL"
+echo "e.g : http://digitalbrainjury.com , http://nsfcareer.io"
+echo "========================================================="
+echo ""
+read -p "Enter DOMAIN NAME: " HOST
+echo ""
+
 
 cd /home/$UNAMEX/$WEBSITENAME
 sudo DOMAIN=$HOST pm2 start -u $UNAMEX ./server.js  --name="service"
