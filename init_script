@@ -19,10 +19,11 @@ sudo apt-get install nginx -y
 sudo systemctl enable nginx
 # sudo apt-get update -y
 sudo apt-get install build-essential libssl-dev -y
+sudo apt install xvfb -y
 
 # Python dependencies
 sudo apt install python-pip -y
-sudo pip install Requests
+sudo pip install requests
 sudo pip install pillow
 
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
