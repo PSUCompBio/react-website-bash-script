@@ -21,6 +21,8 @@ sudo systemctl enable nginx
 # sudo apt-get update -y
 sudo apt-get install build-essential libssl-dev -y
 sudo apt install xvfb -y
+sudo snap install cmake --classic
+sudo apt-get install freeglut3-dev -y
 
 # Python dependencies
 sudo apt install python-pip -y
@@ -83,7 +85,29 @@ echo -n "export const ENDPOINT = "\"$HOST/api/"\" ;" > ./src/config/constants.js
 
 sudo npm install
 export PM2_HOME=/home/$UNAMEX/.pm2
-cd ..
+
+cd /home/$UNAMEX/
+curl -L https://www.vtk.org/files/release/8.2/VTK-8.2.0.tar.gz > VTK.tar.gz
+tar -xvzf VTK.tar.gz
+curl -L https://www.vtk.org/files/release/8.2/VTKData-8.2.0.tar.gz > VTK_DATA.tar.gz
+tar -xvzf VTK_DATA.tar.gz
+mv VTK-8.2.0/ VTK
+cd VTK
+mkdir build
+cd build
+cmake VTK_DATA_ROOT=/home/$UNAMEX/VTK -DBUILD_SHARED_LIBS=ON -DCMAKE_BUILD_TYPE=Release ..
+sudo make install -j 8
+export LD_LIBRARY_PATH=/home/$UNAMEX/VTK/build/bin:/home/$UNAMEX/VTK/build/lib
+export VTK_ROOT="/home/$UNAMEX/VTK/" >> /home/$UNAMEX/.bash_profile
+git clone https://github.com/PSUCompBio/ProjectedTexture-VTK
+cd ProjectedTexture-VTK/
+mkdir build
+cd build/
+cmake -DVTK_DIR:PATH=/home/$UNAMEX/VTK/build/ make -j 8 ..
+make
+cp ProjectedTexture /home/$UNAMEX/$WEBSITENAME/config/
+cd /home/$UNAMEX/$WEBSITENAME/
+
 echo "====================================================================="
 echo "|                **** VERY IMPORTANT STEP *****                      |"
 echo "====================================================================="
